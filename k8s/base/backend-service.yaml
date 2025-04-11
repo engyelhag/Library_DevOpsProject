@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  namespace: k8s
+spec:
+  selector:
+    app: backend # Selects pods with app label backend
+  ports:
+    - protocol: TCP # Protocol used for communication
+      port: 5000 # Exposed port of the service
+      targetPort: 5000 # Port on which the backend container is listening
+  type: ClusterIP # change from ClusterIP to use AWS ALB
+

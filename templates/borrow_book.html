@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrow Book</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <h1>Borrow Book</h1>
+    <form method="POST">
+        <label for="book_id">Select Book to Borrow:</label><br>
+        <select id="book_id" name="book_id" required>
+            {% for book in books %}
+            <option value="{{ book[0] }}">{{ book[1] }} by {{ book[2] }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="borrower">Your Name:</label><br>
+        <input type="text" id="borrower" name="borrower" required><br><br>
+        <input type="submit" value="Borrow Book">
+    </form>
+
+    <!-- Add Back to Home Link -->
+    <a href="{{ url_for('index') }}" class="btn">Back to Home</a>
+</body>
+</html>

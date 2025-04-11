@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return Book</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        // This function will automatically fill the borrower field based on the selected book
+        function setBorrower() {
+            var borrower = document.getElementById("book_id").options[document.getElementById("book_id").selectedIndex].dataset.borrower;
+            document.getElementById("borrower").value = borrower;
+        }
+    </script>
+</head>
+<body>
+    <h1>Return Book</h1>
+    <form method="POST">
+        <label for="book_id">Select Book to Return:</label><br>
+        <select id="book_id" name="book_id" onchange="setBorrower()">
+            <option value="" disabled selected>Select a book to return</option>
+            {% for borrowed_book in books %}
+            <option value="{{ borrowed_book[0] }}" data-borrower="{{ borrowed_book[2] }}">
+                {{ borrowed_book[1] }} (Borrowed by {{ borrowed_book[2] }})
+            </option>
+            {% endfor %}
+        </select><br><br>
+
+        <!-- Hidden borrower field, will be populated automatically -->
+        <input type="hidden" id="borrower" name="borrower">
+
+        <input type="submit" value="Return Book">
+    </form>
+
+    <!-- Add Back to Home Link -->
+    <a href="{{ url_for('index') }}" class="btn">Back to Home</a>
+</body>
+</html>

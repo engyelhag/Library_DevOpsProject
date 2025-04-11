@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Books</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Search for Books</h1>
+        <form method="POST">
+            <label for="search_query">Search by Title or Author</label>
+            <input type="text" id="search_query" name="search_query" placeholder="Enter book title or author" required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if books %}
+            <h2>Search Results:</h2>
+            <ul class="search-results">
+                {% for book in books %}
+                    <li>
+                        <span class="book-title">{{ book[1] }}</span> by
+                        <span class="book-author">{{ book[2] }}</span> - Quantity: {{ book[3] }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% if request.method == 'POST' %}
+                <p class="no-results">No books found for your search.</p>
+            {% endif %}
+        {% endif %}
+
+        <a href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+</body>
+</html>
